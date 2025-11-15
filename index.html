@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="bg">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>КАЛКУЛАТОР ЗА ОПРЕДЕЛЯНЕ НА ОБЩА ЦЕНА НА ПРОЕКТИРАНЕ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'primary': 'var(--primary-color)',
+              'secondary': 'var(--secondary-color)',
+              'accent': 'var(--accent-color)',
+              'light-gray': 'var(--light-gray)',
+              'dark-gray': 'var(--dark-gray)',
+              'success': 'var(--success-color)',
+              'info': 'var(--info-color)',
+              'warning': 'var(--warning-color)',
+              'paid-total': 'var(--paid-total-color)',
+              'header-bg': 'var(--header-bg-color)',
+              'row-alt': 'var(--row-alt-color)',
+              'bg-color': 'var(--bg-color)',
+              'text-color': 'var(--text-color)',
+              'card-bg': 'var(--card-bg-color)',
+              'border-color': 'var(--border-color)',
+            },
+          },
+        },
+      }
+    </script>
+    <style type="text/css">
+      :root {
+          --primary-color: #2c3e50; --secondary-color: #3498db; --accent-color: #e74c3c;
+          --light-gray: #f8f9fa; --dark-gray: #343a40; --success-color: #28a745;
+          --info-color: #17a2b8; --warning-color: #f39c12; --paid-total-color: #0056b3;
+          --header-bg-color: #4a6a85; --row-alt-color: #f2f5f8; --bg-color: #f5f5f5;
+          --text-color: #343a40; --card-bg-color: #ffffff; --border-color: #ddd;
+      }
+      .theme-dark {
+          --primary-color: #ecf0f1; --secondary-color: #3498db; --accent-color: #e74c3c;
+          --light-gray: #3a4149; --dark-gray: #ecf0f1; --success-color: #2ecc71;
+          --info-color: #1abc9c; --warning-color: #f1c40f; --paid-total-color: #5dade2;
+          --header-bg-color: #4e5d6c; --row-alt-color: #3e464f; --bg-color: #2c333a;
+          --text-color: #ecf0f1; --card-bg-color: #343a40; --border-color: #4a525a;
+      }
+      .theme-blue {
+          --primary-color: #0d47a1; --secondary-color: #1976d2; --accent-color: #d32f2f;
+          --light-gray: #e3f2fd; --dark-gray: #212121; --success-color: #388e3c;
+          --info-color: #0288d1; --warning-color: #ffa000; --paid-total-color: #0d47a1;
+          --header-bg-color: #1565c0; --row-alt-color: #e3f2fd; --bg-color: #bbdefb;
+          --text-color: #212121; --card-bg-color: #ffffff; --border-color: #90caf9;
+      }
+      .theme-forest {
+          --primary-color: #2d5a2d; --secondary-color: #558b2f; --accent-color: #bf360c;
+          --light-gray: #f1f8e9; --dark-gray: #1b261b; --success-color: #4caf50;
+          --info-color: #00695c; --warning-color: #f57f17; --paid-total-color: #2d5a2d;
+          --header-bg-color: #4c7e4c; --row-alt-color: #e6efdc; --bg-color: #dcedc8;
+          --text-color: #212121; --card-bg-color: #ffffff; --border-color: #a5d6a7;
+      }
+      .theme-gray {
+          --primary-color: #37474f; --secondary-color: #607d8b; --accent-color: #f44336;
+          --light-gray: #eceff1; --dark-gray: #263238; --success-color: #66bb6a;
+          --info-color: #26c6da; --warning-color: #ffa726; --paid-total-color: #455a64;
+          --header-bg-color: #546e7a; --row-alt-color: #f5f5f5; --bg-color: #cfd8dc;
+          --text-color: #263238; --card-bg-color: #ffffff; --border-color: #b0bec5;
+      }
+      .theme-mint {
+          --primary-color: #004d40; --secondary-color: #00796b; --accent-color: #d81b60;
+          --light-gray: #e0f2f1; --dark-gray: #00251a; --success-color: #4db6ac;
+          --info-color: #00acc1; --warning-color: #fdd835; --paid-total-color: #004d40;
+          --header-bg-color: #00695c; --row-alt-color: #e0f2f1; --bg-color: #b2dfdb;
+          --text-color: #004d40; --card-bg-color: #ffffff; --border-color: #80cbc4;
+      }
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: background-color 0.3s, color 0.3s;
+      }
+      
+      input[type="checkbox"] {
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: var(--card-bg-color);
+        margin: 0;
+        font: inherit;
+        color: currentColor;
+        width: 1.15em;
+        height: 1.15em;
+        border: 0.15em solid var(--border-color);
+        border-radius: 0.25em;
+        transform: translateY(-0.075em);
+        display: inline-grid;
+        place-content: center;
+        cursor: pointer;
+        transition: all 120ms;
+      }
+
+      input[type="checkbox"]::before {
+        content: "";
+        width: 0.65em;
+        height: 0.65em;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+        box-shadow: inset 1em 1em white;
+        transform-origin: bottom left;
+        clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+      }
+
+      input[type="checkbox"]:checked {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+      }
+      
+      input[type="checkbox"]:checked::before {
+        transform: scale(1);
+      }
+
+      input[type="checkbox"]:focus-visible {
+        outline: 2px solid var(--secondary-color);
+        outline-offset: 2px;
+      }
+
+      @media print {
+        .no-print { display: none !important; }
+        body { background: white !important; color: black !important; }
+        #root { padding: 0 !important; }
+        #main-content { box-shadow: none !important; border: none !important; padding: 0 !important; }
+        #printHeader { display: block !important; }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

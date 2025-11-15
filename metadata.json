@@ -1,0 +1,5 @@
+{
+  "name": "Project Pricing Calculator",
+  "description": "A comprehensive web application for calculating, managing, and tracking design project costs. It supports multiple projects within a workspace, detailed specialty pricing, payment tracking, bonus calculations, and generating various reports.",
+  "requestFramePermissions": []
+}
